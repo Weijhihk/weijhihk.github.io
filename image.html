@@ -16,38 +16,61 @@
       position: relative;
       display: inline-block;
       border: 2px solid #ccc;
+      overflow: hidden;
+    }
+
+    #zoomArea {
+      touch-action: none; /* 關閉預設觸控滾動 */
     }
 
     .image-container img {
-      max-width: 100%;
-      height: auto;
       display: block;
+      width: 100%;
+      height: auto;
     }
 
     .tag {
       position: absolute;
-      background-color: red;
-      color: white;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 4px;
       transform: translate(-50%, -50%);
       pointer-events: none;
+      width: 24px;
+      height: 24px;
+    }
+
+    .tag img {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <h2>點擊圖片標記位置</h2>
+  <h2>手機可用手指放大圖片並標註</h2>
 
   <div class="image-container" id="imgContainer">
-    <img id="targetImage" src="./image/2F1.png" alt="示意圖">
+    <div id="zoomArea">
+      <img id="targetImage" src="./image/2F1.png" alt="示意圖">
+    </div>
   </div>
+
+  <!-- ✅ 載入 Panzoom 函式庫 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@9.4.0/dist/panzoom.min.js"></script>
 
   <script>
     const img = document.getElementById('targetImage');
+    const zoomArea = document.getElementById('zoomArea');
     const container = document.getElementById('imgContainer');
 
+    // ✅ 啟用縮放與拖曳
+    const panzoom = Panzoom(zoomArea, {
+      maxScale: 5,
+      minScale: 1,
+      contain: 'outside'
+    });
+    zoomArea.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+
+    // ✅ 點擊標記
     img.addEventListener('click', function (e) {
       const rect = img.getBoundingClientRect();
       const offsetX = e.clientX - rect.left;
@@ -58,10 +81,14 @@
 
       const tag = document.createElement('div');
       tag.className = 'tag';
-      tag.innerText = '標籤';
       tag.style.left = percentX + '%';
       tag.style.top = percentY + '%';
 
+      const icon = document.createElement('img');
+      icon.src = './image/point.png';
+      icon.alt = '標籤';
+
+      tag.appendChild(icon);
       container.appendChild(tag);
     });
   </script>
