@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>圖片標記系統</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <style>
     body {
       font-family: "Microsoft JhengHei", sans-serif;
@@ -17,10 +17,12 @@
       display: inline-block;
       border: 2px solid #ccc;
       overflow: hidden;
+      touch-action: none; /* ✅ 必加，讓 panzoom 接手觸控事件 */
     }
 
     #zoomArea {
-      touch-action: none; /* 關閉預設觸控滾動 */
+      display: inline-block;
+      transform-origin: 0 0;
     }
 
     .image-container img {
@@ -46,7 +48,7 @@
 </head>
 <body>
 
-  <h2>手機可用手指放大圖片並標註</h2>
+  <h2>可縮放的標註圖</h2>
 
   <div class="image-container" id="imgContainer">
     <div id="zoomArea">
@@ -54,23 +56,23 @@
     </div>
   </div>
 
-  <!-- ✅ 載入 Panzoom 函式庫 CDN -->
+  <!-- ✅ 載入 panzoom 函式庫 -->
   <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@9.4.0/dist/panzoom.min.js"></script>
 
   <script>
     const img = document.getElementById('targetImage');
-    const zoomArea = document.getElementById('zoomArea');
     const container = document.getElementById('imgContainer');
+    const zoomArea = document.getElementById('zoomArea');
 
-    // ✅ 啟用縮放與拖曳
+    // ✅ 啟用圖片拖曳與縮放
     const panzoom = Panzoom(zoomArea, {
-      maxScale: 5,
+      maxScale: 4,
       minScale: 1,
-      contain: 'outside'
+      contain: 'outside',
     });
-    zoomArea.parentElement.addEventListener('wheel', panzoom.zoomWithWheel);
+    container.addEventListener('wheel', panzoom.zoomWithWheel);
 
-    // ✅ 點擊標記
+    // ✅ 點擊產生標籤
     img.addEventListener('click', function (e) {
       const rect = img.getBoundingClientRect();
       const offsetX = e.clientX - rect.left;
