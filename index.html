@@ -1,11 +1,67 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>我的第一個網站</title>
+  <title>輸入資料表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #f9f9f9;
+      padding: 30px;
+    }
+
+    form {
+      max-width: 400px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #4A90E2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #357ABD;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, GitHub World!</h1>
+
+  <form>
+    <label for="name">姓名</label>
+    <input type="text" id="name" name="name" placeholder="請輸入姓名" required>
+
+    <label for="phone">電話</label>
+    <input type="tel" id="phone" name="phone" placeholder="請輸入電話號碼" required>
+
+    <button type="submit">送出</button>
+  </form>
+
 </body>
 </html>
