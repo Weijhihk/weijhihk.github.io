@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>圖片標記系統</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Microsoft JhengHei", sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .image-container {
+      position: relative;
+      display: inline-block;
+      border: 2px solid #ccc;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .tag {
+      position: absolute;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>點擊圖片標記位置</h2>
+
+  <div class="image-container" id="imgContainer">
+    <img id="targetImage" src="./image/2F1.png" alt="示意圖">
+  </div>
+
+  <script>
+    const img = document.getElementById('targetImage');
+    const container = document.getElementById('imgContainer');
+
+    img.addEventListener('click', function (e) {
+      const rect = img.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+
+      const percentX = (offsetX / rect.width) * 100;
+      const percentY = (offsetY / rect.height) * 100;
+
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.innerText = '標籤';
+      tag.style.left = percentX + '%';
+      tag.style.top = percentY + '%';
+
+      container.appendChild(tag);
+    });
+  </script>
+
+</body>
+</html>
