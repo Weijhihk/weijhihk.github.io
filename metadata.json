@@ -1,0 +1,5 @@
+{
+  "name": "Construction Photo Report Generator",
+  "description": "A tool to upload construction photos and generate a formatted PDF report.",
+  "requestFramePermissions": []
+}
